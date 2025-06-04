@@ -1,0 +1,5 @@
+catalog:
+  sandbox:
+    type: sql
+    uri: sqlite:////tmp/warehouse/pyiceberg_catalog.db
+    warehouse: file:///tmp/warehouse

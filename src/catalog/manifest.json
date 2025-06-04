@@ -1,0 +1,30 @@
+{
+  "tables": {
+    "test_table": {
+      "schema": [
+        [
+          [
+            "first_name",
+            "TEXT"
+          ],
+          "string"
+        ],
+        [
+          [
+            "last_name",
+            "TEXT"
+          ],
+          "string"
+        ],
+        [
+          [
+            "age",
+            "INT"
+          ],
+          "string"
+        ]
+      ],
+      "files": []
+    }
+  }
+}

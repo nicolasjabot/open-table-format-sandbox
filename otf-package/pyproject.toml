@@ -1,0 +1,13 @@
+[project]
+name = "otf-package"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pandas>=2.2.3",
+    "pyarrow>=20.0.0",
+    "pyiceberg>=0.9.1",
+    "pyspark>=3.5.5",
+    "sqlglot>=26.17.1",
+]
