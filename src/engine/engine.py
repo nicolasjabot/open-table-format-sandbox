@@ -1,64 +1,52 @@
-from parser import SQLParser, Plan
+from parser import SQLParser
 from catalog import TableCatalog
 from storage import Storage
 from datetime import datetime
 import os
+from planner import Plan, SQLOperations
+
 
 class Engine:
     def __init__(self):
         self.parser = SQLParser()
         self.catalog = TableCatalog()
         self.storage = Storage()
+        self.dispatch = {
+            SQLOperations.CREATE: self._parse_create,
+            SQLOperations.INSERT: self._parse_insert,
+            SQLOperations.SELECT: self._parse_select,
+        }
 
     def query(self, sql: str):
+        """First step of the Engine is to parse the query. 
+        For that, we will create a query method and use the parser 
+        class define in parser.py"""
         plan = self.parser.parse_sql(sql)
+        if not plan:
+            print("Failed to parse SQL query.")
+            return
+        try:
+            op_enum = SQLOperations[plan.op.upper()]
+            handler = self.dispatch.get(op_enum)
+            if handler:
+                handler(plan)
+            else:
+                print(f"Unsupported operation: {plan.op}")
+        except KeyError:
+            print(f"Unknown operation: {plan.op}")
 
-        if plan.op == "CREATE":
-            try:
-                # Register table in metadata
-                columns_with_type = [(col, "string") for col in plan.columns]
-                self.catalog.register_table(plan.table, columns_with_type)
-                print(f"Table '{plan.table}' created with columns: {plan.columns}")
+    def _create(self, plan: Plan):
+        pass
 
-                # create storage folder
-                path = os.path.join(self.storage.storage_path, plan.table)
-                os.makedirs(path, exist_ok=True)
-                self.storage.write_parquet(plan.table, columns_with_type)
-            except ValueError as e:
-                print(f" {e}")
+    def _insert(self, plan:Plan):
+        pass
 
-                print("DEBUG: Attempting to register table")
-                self.catalog.register_table(plan.table, columns_with_type)
+    def _select(self, plan:Plan):
+        pass
 
-        elif plan.op == "INSERT":
-            if plan.table not in self.catalog:
-                print(f"Table '{plan.table}' not found.")
-                return
-
-            if not hasattr(plan, "values") or len(plan.columns) != len(plan.values):
-                print("Invalid INSERT statement: columns and values must match.")
-                return
-
-            row = {col: val for col, val in zip(plan.columns, plan.values)}
-            self.catalog[plan.table]["rows"].append(row)
-
-            print(f"Inserted row into '{plan.table}': {row}")
+   
 
 
-        elif plan.op == "SELECT":
-            if plan.table not in self.catalog:
-                print(f"Table '{plan.table}' not found.")
-                return
-
-            rows = self.catalog[plan.table]["rows"]
-            columns = plan.columns
-
-            print("Query Result:")
-            for row in rows:
-                if columns == ["*"]:
-                    print(row)
-                else:
-                    print({col: row.get(col) for col in columns})
-
-        else:
-            print(f"Unsupported operation: {plan.op}")
+# if __name__ == "__main__":
+#     engine = Engine()
+#     engine.query("SELECT * FROM test_table")

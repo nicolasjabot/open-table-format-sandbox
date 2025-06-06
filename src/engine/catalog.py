@@ -60,3 +60,9 @@ class TableCatalog:
 
     def list_tables(self):
         return list(self.catalog["tables"].keys())
+    
+    def table_exists(self, table_name: str) -> bool:
+        """
+        Check if a table exists in the catalog.
+        """
+        return table_name in self.catalog["tables"]
