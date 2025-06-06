@@ -25,7 +25,7 @@ class SQLParser:
     def _parse_create(self, parsed):
         """Handles CREATE table operation"""
         schema_expr = parsed.args["this"]
-        table = schema_expr.name    
+        table = str(schema_expr.this)    
         columns = [(col.this.name, col.args["kind"].this.value) for col in schema_expr.expressions]
 
         return Plan(op="CREATE", table=table, schema=None, columns=columns)
@@ -67,7 +67,7 @@ class SQLParser:
 ### use to test the SQLParser ###
 if __name__ == "__main__":
     sql_parser = SQLParser()
-    test_query = "SELECT * FROM test_table"
+    test_query = "CREATE TABLE test_table (first_name TEXT, last_name TEXT, age INT) WITH (FORMAT=iceberg)"
     plan = sql_parser.parse_sql(test_query)
     if plan:
         print(plan)
