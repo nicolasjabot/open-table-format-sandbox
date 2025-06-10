@@ -4,7 +4,6 @@ from datetime import datetime
 
 CATALOG_PATH = "src/catalog/manifest.json"
 
-
 class TableCatalog:
     """the table class is used to interact between the engine and the metadata 
     in here, we communicate about the location and what should be executed on the storage

@@ -41,16 +41,14 @@ class Engine:
             self.catalog.register_table(plan.table, columns_with_type)
             print(f"Table '{plan.table}' created with columns: {plan.columns}")
 
-            # create storage folder
             path = os.path.join(self.storage.storage_path, plan.table)
             os.makedirs(path, exist_ok=True)
-            self.storage.write_parquet(plan.table, columns_with_type)
+            # self.storage.write_parquet(plan.table, columns_with_type)
         except ValueError as e:
             print(f" {e}")
 
             print("DEBUG: Attempting to register table")
             self.catalog.register_table(plan.table, columns_with_type)
-
 
     def _insert_operation(self, plan:Plan):
         if not self.catalog.table_exists(plan.table):
@@ -61,35 +59,36 @@ class Engine:
             print("Invalid INSERT statement: columns and values must match.")
             return
 
-        # Convert rows to list of dicts
         rows = [dict(zip(plan.columns, row)) for row in plan.rows]
 
         file_path, timestamp = self.storage.insert_data(plan.table, rows)
 
-        # Register the new file in the catalog
         self.catalog.add_file(plan.table, file_path, timestamp)
 
         print(f"Inserted {len(rows)} row(s) into '{plan.table}' at {file_path}")
 
     def _select_operation(self, plan:Plan):
         if not self.catalog.table_exists(plan.table):
-            pass
-        #         print(f"Table '{plan.table}' not found.")
-        #         return
+            # pass
+            print(f"Table '{plan.table}' not found.")
+            return
 
-        #     rows = self.catalog[plan.table]["rows"]
-        #     columns = plan.columns
-
-        #     print("Query Result:")
-        #     for row in rows:
-        #         if columns == ["*"]:
-        #             print(row)
-        #         else:
-        #             print({col: row.get(col) for col in columns})
-
+        try:
+            df = self.storage.read_data(plan.table)
+        except Exception as e:
+            print(f"Error reading data: {e}")
+            return
+        
+        if plan.columns == ["*"]:
+            print(df.to_string(index=False))
+        else: 
+            missing = [col for col in plan.columns if col not in df.columns]
+            if missing:
+                print(f"Columns not found: {missing}")
+                return
+            print(df[plan.cloumns].to_string(index=False))
    
-
 
 # if __name__ == "__main__":
 #     engine = Engine()
-#     engine.query("SELECT * FROM test_table")
+#     engine.query("select * from test_table")

@@ -24,7 +24,20 @@
           "string"
         ]
       ],
-      "files": []
+      "files": [
+        {
+          "path": "src/storage/test_table/file_20250610_125924.parquet",
+          "timestamp": "20250610_125924"
+        },
+        {
+          "path": "src/storage/test_table/file_20250610_125959.parquet",
+          "timestamp": "20250610_125959"
+        },
+        {
+          "path": "src/storage/test_table/file_20250610_132426.parquet",
+          "timestamp": "20250610_132426"
+        }
+      ]
     }
   }
 }

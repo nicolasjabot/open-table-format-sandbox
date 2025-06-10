@@ -33,7 +33,7 @@ class SQLParser:
     def _parse_insert(self, parsed):
         """Handles INSERT operation"""
         schema_expr = parsed.args["this"]
-        table = schema_expr.this    
+        table = str(schema_expr.this)
         columns = [col.name for col in schema_expr.expressions]
 
         values_expr = parsed.args["expression"]
