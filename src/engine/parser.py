@@ -21,7 +21,8 @@ class SQLParser:
         except Exception as e:
             print(f"Error parsing SQL: {e}")
             return None
-        
+
+    # ------------------- CRUD operations ----------------------  
     def _parse_create(self, parsed):
         """Handles CREATE table operation"""
         schema_expr = parsed.args["this"]

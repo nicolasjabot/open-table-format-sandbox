@@ -92,14 +92,11 @@ class Storage:
 
 # # test snippet to read the data
 # if __name__ == "__main__":
-#     # Initialize the storage
 #     storage = Storage()
     
-#     # Define the table name
 #     table_name = "test_table"
     
 #     try:
-#         # Attempt to read data from storage
 #         df = storage.read_data(table_name)
 #         print(f"Data read from table '{table_name}':\n")
 #         print(df)

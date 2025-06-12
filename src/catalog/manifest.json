@@ -3,39 +3,30 @@
     "test_table": {
       "schema": [
         [
-          [
-            "first_name",
-            "TEXT"
-          ],
-          "string"
+          "first_name",
+          "TEXT"
         ],
         [
-          [
-            "last_name",
-            "TEXT"
-          ],
-          "string"
+          "last_name",
+          "TEXT"
         ],
         [
-          [
-            "age",
-            "INT"
-          ],
-          "string"
+          "age",
+          "INT"
         ]
       ],
       "files": [
         {
-          "path": "src/storage/test_table/file_20250610_125924.parquet",
-          "timestamp": "20250610_125924"
+          "path": "src/storage/test_table/file1_20250612_165856.parquet",
+          "timestamp": "20250612_165856"
         },
         {
-          "path": "src/storage/test_table/file_20250610_125959.parquet",
-          "timestamp": "20250610_125959"
+          "path": "src/storage/test_table/file1_20250612_170102.parquet",
+          "timestamp": "20250612_170102"
         },
         {
-          "path": "src/storage/test_table/file_20250610_132426.parquet",
-          "timestamp": "20250610_132426"
+          "path": "src/storage/test_table/file1_20250612_170150.parquet",
+          "timestamp": "20250612_170150"
         }
       ]
     }

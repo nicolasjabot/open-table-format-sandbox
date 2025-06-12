@@ -11,7 +11,7 @@ class SQLOperations(Enum):
     INSERT = "INSERT"
     CREATE = "CREATE"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.value
 
 @dataclass
@@ -23,3 +23,4 @@ class Plan:
     schema: Optional[str]
     columns: List[tuple]  # containing column name, and type
     rows: Optional[List[List]] = None  # going to be used for INSERT only
+    # version
