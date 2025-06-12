@@ -1,6 +1,11 @@
 # Overview
 
-This repository contains a small SQL engine prototype that writes and reads data in Parquet files, using a simple JSON “catalog” for metadata. The code is organized in two main parts:
+This repository contains a small SQL engine prototype that writes and reads data in Parquet files, using a simple JSON “catalog” for metadata. 
+
+![Open Table Format Architecture](otf.png "Open Table Format System Architecture")
+
+
+The code is organized in two main parts:
 
 - **src/** – Implementation of the engine, storage layer, parser, planner, and catalog.
 - **otf-package/** – A minimal Python package with dependencies (no functional code beyond printing “Hello from otf-package!”).
